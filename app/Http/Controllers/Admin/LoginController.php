@@ -5,16 +5,28 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
+
 require_once 'resources/org/code/Code.class.php';
 class LoginController extends CommonController
 {
     /**
 	 * 登陆
 	 */
-	 public function login()
-	 {
-	 	return view('admin.login');
-	 }
+    public function login()
+    {
+
+        if($input = Input::all()){
+            $code = new \Code;
+            $_code = $code->get();
+            if(strtoupper($input['code'])!=$_code){
+                return redirect()->back()->with('msg','验证码错误');
+            }
+            echo 'ok';
+        }else {
+            return view('admin.login');
+        }
+    }
 	 
 	 /**
 	  * 验证
@@ -30,7 +42,6 @@ class LoginController extends CommonController
 	  */
 	  public function getcode()
 	  {
-	  	$code = new \Code;
-	  	echo $code->get();
+	    echo session('msg');
 	  }
 }
