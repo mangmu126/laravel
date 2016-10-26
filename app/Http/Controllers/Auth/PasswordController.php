@@ -29,7 +29,4 @@ class PasswordController extends Controller
     {
         $this->middleware('guest');
     }
-    public function index_action(){
-    	echo 'sss';
-    }
 }
